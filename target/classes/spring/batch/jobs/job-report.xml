@@ -1,0 +1,102 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" 
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="report" class="com.org.model.Report" scope="prototype" />
+    
+	<batch:job id="reportJob">
+		<batch:step id="step1">
+			<batch:tasklet ref="test">
+				
+				
+			</batch:tasklet>
+			<batch:next on="*" to="step2"/>
+		</batch:step >
+		
+		<batch:step id="step2">
+			<batch:tasklet ref="test2">
+				
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	
+	<bean id="jobbean" class="com.org.model.JobBean" scope="prototype" >
+		<property name="id" value="0"></property>
+	
+	</bean>
+	
+	
+	<bean id="test" class="com.org.TestTask">
+		<property name="job" ref="jobbean"></property>
+		
+	</bean>
+	
+	<bean id="test2" class="com.org.Task2">
+		<property name="job" ref="jobbean"></property>
+		
+	</bean>
+	
+	
+
+	<!-- <bean id="cvsFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+
+		Read a csv file
+		<property name="resource" value="classpath:cvs/report.csv" />
+
+		<property name="lineMapper">
+			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+
+				split it
+				<property name="lineTokenizer">
+					<bean
+						class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+						<property name="names" value="date,impressions,clicks,earning" />
+					</bean>
+				</property>
+
+				<property name="fieldSetMapper">
+				    
+				    return back to reader, rather than a mapped object.
+				    
+				    	<bean class="org.springframework.batch.item.file.mapping.PassThroughFieldSetMapper" />
+				   
+				      
+					map to an object
+					<bean
+						class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+						<property name="prototypeBeanName" value="report" />
+					</bean>
+					
+				</property>
+
+			</bean>
+		</property>
+
+	</bean> -->
+
+	<!-- <bean id="mysqlItemWriter"
+		class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql">
+			<value>
+            <![CDATA[        
+            	insert into RAW_REPORT(DATE,IMPRESSIONS,CLICKS,EARNING) values (:date, :impressions, :clicks, :earning)
+            ]]>
+			</value>
+		</property>
+		It will take care matching between object property and sql name parameter
+		<property name="itemSqlParameterSourceProvider">
+			<bean
+				class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+	</bean> -->
+	
+	 
+
+</beans>
