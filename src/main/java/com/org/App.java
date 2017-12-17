@@ -10,7 +10,7 @@ import com.org.model.JobBean;
 
 public class App {
 	public static void main(String[] args) {
-
+adas
 		String[] springConfig  = 
 			{	"spring/batch/config/database.xml", 
 				"spring/batch/config/context.xml",
