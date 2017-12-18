@@ -20,7 +20,7 @@ import groovyx.net.http.*
         
         Class.forName("oracle.jdbc.driver.OracleDriver");
         
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xe", "PRASHANT", "9969378944");
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xe", "****", "*******");
 		
 		Statement createStatement = connection.createStatement();
 		
@@ -106,7 +106,7 @@ import groovyx.net.http.*
             def json1 = client.get(path:'project_status.json') 
             println json1
             def projectStatusJson=json1.data.get("projectStatus")
-            String analysisStatus=projectStatusJson.getString("status")
+            String analysisStatus=projectStatusJson.get("status")
             //analysisStatus=""
             return analysisStatus
         }
